@@ -2,48 +2,38 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/global.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Pagamento | ArenaPRO</title>
+    <title>Checkout | TicketFut</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="flex items-center justify-center min-h-screen">
-    <div class="bg-effect"></div>
-    <div class="cyber-panel p-10 text-center max-w-md w-full">
-        <h2 class="font-cyber text-xl mb-6 uppercase team-text">Autenticação de Pagamento</h2>
-        <div id="cartDetails" class="mb-6 font-cyber text-sm border-b border-white/5 pb-4"></div>
-        
-        <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-[0_0_20px_var(--p)]">
-            <img id="qrCode" src="" alt="QRCode PIX">
+<body>
+    <div class="container">
+        <h2>RESUMO & <span>PAGAMENTO</span></h2>
+        <div style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 6px; border-left: 4px solid var(--main-color); margin: 20px 0;">
+            <p id="resumo-jogo" style="font-weight: 900;"></p>
+            <p id="info-desconto" style="font-size: 12px; color: #00ff62; margin-top: 5px;"></p>
+            <p id="resumo-valor" style="color: var(--main-color); font-size: 24px; font-weight: 900; margin-top: 10px;"></p>
         </div>
-        
-        <p class="text-[10px] font-cyber text-gray-500 mb-6 tracking-widest">ESCANEIE O CÓDIGO PARA VALIDAR A COMPRA</p>
-        <button onclick="confirmPay()" class="btn-tactic w-full">CONFIRMAR RECEBIMENTO</button>
+        <div class="pay-methods">
+            <div class="method-btn active" id="btn-cred" onclick="setPay('credito')">CRÉDITO</div>
+            <div class="method-btn" id="btn-deb" onclick="setPay('debito')">DÉBITO</div>
+            <div class="method-btn" id="btn-pix" onclick="setPay('pix')">PIX</div>
+        </div>
+        <div id="pay-card">
+            <input type="text" placeholder="NÚMERO DO CARTÃO">
+            <div class="row">
+                <input type="text" placeholder="MM/AA" style="flex: 1;">
+                <input type="text" placeholder="CVV" style="flex: 1;">
+            </div>
+        </div>
+        <div id="pay-pix-checkout" style="display:none; text-align: center;">
+            <div style="background: #fff; width: 120px; height: 120px; margin: 0 auto 10px; padding: 10px; border-radius: 8px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=TicketFutPagamento" alt="QR PIX Checkout">
+            </div>
+            <p style="font-size: 10px; color: var(--main-color);">CHAVE PIX: ingressos@ticketfut.com.br</p>
+        </div>
+        <button class="btn-action" onclick="confirmarCompra()">CONFIRMAR COMPRA</button>
     </div>
-
-    <script src="../js/core/storage.js"></script>
-
-<script src="../js/core/utils.js"></script>
-
-    <script>
-        const item = Storage.getCart();
-        const user = Storage.getSession();
-        if(!item) window.location.href = 'index.html';
-
-       // Note o uso da crase ` no início e no fim de cada linha:
-document.getElementById('cartDetails').innerHTML = `SETOR: ${item.nome} <br> VALOR: R$ ${item.preco},00`;
-
-document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ARENAPRO-PAY-${Date.now()}`;
-        function confirmPay() {
-            const ticket = {
-                ...item,
-                userEmail: user.email,
-                dataCompra: new Date().toLocaleDateString(),
-                id: Math.random().toString(36).substr(2, 9).toUpperCase()
-            };
-            Storage.savePurchase(ticket);
-            alert("PAGAMENTO CONFIRMADO. INGRESSO DISPONÍVEL NA CARTEIRA.");
-            window.location.href = 'meus-ingressos.html';
-        }
-    </script>
+    <script src="../js/core/app.js"></script>
+    <script src="../js/pagamento.js"></script>
 </body>
 </html>

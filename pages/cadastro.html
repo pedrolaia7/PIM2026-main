@@ -2,67 +2,56 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro | ArenaPRO</title>
-    <link rel="stylesheet" href="../css/global.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Cadastro | TicketFut</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="flex items-center justify-center min-h-screen">
-    <div class="bg-effect"></div>
-    <div class="cyber-panel p-10 w-full max-w-md animate_animated animate_fadeIn">
-        <h2 class="font-cyber text-3xl mb-8 text-center uppercase tracking-tighter text-white">Novo <span class="team-text text-cyan-400">Operador</span></h2>
-        
-        <form id="formCadastro" class="flex flex-col gap-4">
-            <input type="text" id="nome" placeholder="NOME COMPLETO" class="p-3 bg-white/5 border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
-            <input type="email" id="email" placeholder="E-MAIL" class="p-3 bg-white/5 border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
-            <input type="password" id="senha" placeholder="SENHA" class="p-3 bg-white/5 border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
-            <select id="time" class="p-3 bg-black border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
-                <option value="">FILIAÇÃO (TIME)</option>
-                <option value="Palmeiras">Palmeiras</option>
-                <option value="Corinthians">Corinthians</option>
-                <option value="Flamengo">Flamengo</option>
-                <option value="São Paulo">São Paulo</option>
-                <option value="Santos">Santos</option>
-            </select>
-            <button type="submit" class="btn-tactic mt-4 bg-cyan-600 hover:bg-cyan-500 p-3 rounded font-bold text-white transition-all uppercase">Registrar Identidade</button>
-        </form>
-        
-        <p class="text-center mt-6 text-xs text-gray-500 font-cyber uppercase">Já possui identidade? <a href="login.html" class="team-text text-cyan-400 hover:underline">Logar</a></p>
+<body>
+    <div class="container">
+        <h2>NOVO <span>OPERADOR</span></h2>
+        <input type="text" id="cad-nome" placeholder="NOME COMPLETO">
+        <input type="text" id="cad-cpf" placeholder="CPF">
+        <input type="email" id="cad-email" placeholder="E-MAIL">
+        <input type="password" id="cad-senha" placeholder="SENHA">
+
+        <select id="cad-time" onchange="updateTheme(this.value)">
+            <option value="">FILIAÇÃO (TIME)</option>
+            <option value="Palmeiras">Palmeiras</option>
+            <option value="Corinthians">Corinthians</option>
+            <option value="Flamengo">Flamengo</option>
+            <option value="Sao Paulo">São Paulo</option>
+        </select>
+
+        <select id="cad-socio" onchange="toggleSocioPay(this.value)">
+            <option value="0">SEM PLANO (SÓ INGRESSO)</option>
+            <option value="0.05">SÓCIO BRONZE - 5% DESC.</option>
+            <option value="0.10">SÓCIO PRATA - 10% DESC.</option>
+            <option value="0.20">SÓCIO OURO - 20% DESC.</option>
+        </select>
+
+        <div id="area-pagamento-socio" style="display:none; margin-top: 15px; border-top: 1px solid #222; padding-top: 15px;">
+            <p style="font-size: 11px; margin-bottom: 10px; color: var(--main-color);">PAGAMENTO DA ADESÃO:</p>
+            <div class="pay-methods">
+                <div class="method-btn active" id="s-btn-cred" onclick="setSocioPay('credito')">CRÉDITO</div>
+                <div class="method-btn" id="s-btn-deb" onclick="setSocioPay('debito')">DÉBITO</div>
+                <div class="method-btn" id="s-btn-pix" onclick="setSocioPay('pix')">PIX</div>
+            </div>
+            <div id="socio-card-fields">
+                <input type="text" placeholder="NÚMERO DO CARTÃO">
+                <div class="row">
+                    <input type="text" placeholder="MM/AA" style="flex: 1;">
+                    <input type="text" placeholder="CVV" style="flex: 1;">
+                </div>
+            </div>
+            <div id="socio-pix-fields" style="display:none; text-align: center;">
+                <div style="background: #fff; width: 100px; height: 100px; margin: 0 auto 10px; padding: 5px; border-radius: 4px;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=SocioTicketFut" alt="QR PIX">
+                </div>
+                <p style="font-size: 10px; color: var(--main-color);">CHAVE PIX: socio@ticketfut.com.br</p>
+            </div>
+        </div>
+        <button class="btn-action" onclick="finalizarCadastro()">FINALIZAR E ACESSAR</button>
     </div>
-
-    <script src="../js/core/storage.js"></script>
-    <script src="../js/core/utils.js"></script>
-
-    <script>
-        document.getElementById('formCadastro').addEventListener('submit', function(e) {
-            e.preventDefault(); // Impede a página de recarregar
-
-            // 1. Coleta os dados dos campos
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-            const time = document.getElementById('time').value;
-
-            // 2. Cria o objeto do usuário (o app.js espera o campo 'time')
-            const novoUsuario = {
-                nome: nome,
-                email: email,
-                senha: senha,
-                time: time,
-                isSocio: false // valor padrão
-            };
-
-            // 3. Usa a função do seu storage.js para salvar
-            const sucesso = Storage.saveUser(novoUsuario);
-
-            if (sucesso) {
-                alert("IDENTIDADE REGISTRADA COM SUCESSO!");
-                // 4. Redireciona para o login para o usuário entrar
-                window.location.href = 'login.html';
-            } else {
-                alert("ERRO: Este e-mail já está registrado no sistema.");
-            }
-        });
-    </script>
+    <script src="../js/core/app.js"></script>
+    <script src="../js/cadastro.js"></script>
 </body>
 </html>

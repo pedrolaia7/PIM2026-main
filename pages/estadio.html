@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Arena | TicketFut</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>MAPA DA <span>ARENA</span></h2>
+        <div class="estadio-grid">
+            <div class="setor norte" onclick="selecionarSetor('NORTE')">NORTE</div>
+            <div class="setor oeste" onclick="selecionarSetor('OESTE')">OESTE</div>
+            <div class="gramado">GRAMADO</div>
+            <div class="setor leste" onclick="selecionarSetor('LESTE')">LESTE</div>
+            <div class="setor sul" onclick="selecionarSetor('SUL')">SUL</div>
+        </div>
+        <button class="btn-action" style="background: transparent; border: 1px solid #333; color: #888;" onclick="window.history.back()">VOLTAR</button>
+    </div>
+    <script src="../js/core/app.js"></script>
+    <script src="../js/estadio.js"></script>
+</body>
+</html>
