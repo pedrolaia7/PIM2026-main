@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sócio Pro | ArenaPRO</title>
+</head>
+<body class="p-6">
+    <div class="bg-effect"></div>
+    <div class="max-w-2xl mx-auto cyber-panel p-10 mt-10">
+        <h2 class="font-cyber text-2xl mb-8 team-text uppercase tracking-widest">Cadastro de Cartão & Sócio</h2>
+        <form id="formCard" class="space-y-4">
+            <input type="text" id="numCard" placeholder="NÚMERO DO CARTÃO" required>
+            <div class="grid grid-cols-2 gap-4">
+                <input type="text" id="valCard" placeholder="MM/AA" required>
+                <input type="text" id="cvvCard" placeholder="CVV" required>
+            </div>
+            <button type="submit" class="btn-tactic">SALVAR CARTÃO TÁTICO</button>
+        </form>
+        <div class="mt-8 border-t border-white/10 pt-6">
+            <button onclick="window.location.href='index.html'" class="text-xs font-cyber text-gray-500 hover:text-white uppercase tracking-widest">// VOLTAR AO DASHBOARD</button>
+        </div>
+    </div>
+
+  <script src="../js/core/storage.js"></script>
+
+<script src="../js/core/utils.js"></script>
+
+    <script>
+        const user = Storage.getSession();
+        if(!user) window.location.href = 'login.html';
+
+        document.getElementById('formCard').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const card = {
+                userEmail: user.email,
+                numero: document.getElementById('numCard').value,
+                validade: document.getElementById('valCard').value
+            };
+            Storage.saveCard(card);
+            alert("CARTÃO SINCRONIZADO!");
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

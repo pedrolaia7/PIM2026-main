@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro | ArenaPRO</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="bg-effect"></div>
+    <div class="cyber-panel p-10 w-full max-w-md animate_animated animate_fadeIn">
+        <h2 class="font-cyber text-3xl mb-8 text-center uppercase tracking-tighter text-white">Novo <span class="team-text text-cyan-400">Operador</span></h2>
+        
+        <form id="formCadastro" class="flex flex-col gap-4">
+            <input type="text" id="nome" placeholder="NOME COMPLETO" class="p-3 bg-white/5 border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
+            <input type="email" id="email" placeholder="E-MAIL" class="p-3 bg-white/5 border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
+            <input type="password" id="senha" placeholder="SENHA" class="p-3 bg-white/5 border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
+            <select id="time" class="p-3 bg-black border border-white/10 text-white rounded outline-none focus:border-cyan-500" required>
+                <option value="">FILIAÇÃO (TIME)</option>
+                <option value="Palmeiras">Palmeiras</option>
+                <option value="Corinthians">Corinthians</option>
+                <option value="Flamengo">Flamengo</option>
+                <option value="São Paulo">São Paulo</option>
+                <option value="Santos">Santos</option>
+            </select>
+            <button type="submit" class="btn-tactic mt-4 bg-cyan-600 hover:bg-cyan-500 p-3 rounded font-bold text-white transition-all uppercase">Registrar Identidade</button>
+        </form>
+        
+        <p class="text-center mt-6 text-xs text-gray-500 font-cyber uppercase">Já possui identidade? <a href="login.html" class="team-text text-cyan-400 hover:underline">Logar</a></p>
+    </div>
+
+    <script src="../js/core/storage.js"></script>
+    <script src="../js/core/utils.js"></script>
+
+    <script>
+        document.getElementById('formCadastro').addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede a página de recarregar
+
+            // 1. Coleta os dados dos campos
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const time = document.getElementById('time').value;
+
+            // 2. Cria o objeto do usuário (o app.js espera o campo 'time')
+            const novoUsuario = {
+                nome: nome,
+                email: email,
+                senha: senha,
+                time: time,
+                isSocio: false // valor padrão
+            };
+
+            // 3. Usa a função do seu storage.js para salvar
+            const sucesso = Storage.saveUser(novoUsuario);
+
+            if (sucesso) {
+                alert("IDENTIDADE REGISTRADA COM SUCESSO!");
+                // 4. Redireciona para o login para o usuário entrar
+                window.location.href = 'login.html';
+            } else {
+                alert("ERRO: Este e-mail já está registrado no sistema.");
+            }
+        });
+    </script>
+</body>
+</html>

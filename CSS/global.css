@@ -1,0 +1,63 @@
+:root { 
+    --p: #00f2fe; 
+    --p-glow: rgba(0, 242, 254, 0.3); 
+    --bg: #030712; 
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background: var(--bg); 
+    color: white; 
+    min-height: 100vh; 
+    margin: 0; 
+    overflow-x: hidden; 
+}
+
+.font-cyber { font-family: 'Oxanium', sans-serif; }
+
+/* Fundo de Partículas Dinâmico */
+body::before {
+    content: ""; position: fixed; inset: 0;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    opacity: 0.1; animation: orbit 60s linear infinite; z-index: -1;
+}
+
+@keyframes orbit { 
+    from { background-position: 0 0, 40px 60px, 130px 270px; } 
+    to { background-position: 550px 550px, 390px 410px, 380px 520px; } 
+}
+
+.cyber-panel { 
+    background: rgba(255, 255, 255, 0.02); 
+    backdrop-filter: blur(20px); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    position: relative; 
+}
+
+.btn-tactic { 
+    position: relative; overflow: hidden; background: transparent; 
+    border: 1px solid var(--p); color: var(--p); font-family: 'Oxanium'; 
+    font-weight: bold; text-transform: uppercase; transition: all 0.3s; 
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); 
+}
+
+.btn-tactic:hover { background: var(--p); color: black; box-shadow: 0 0 20px var(--p); }
+
+/* SVG Estádio */
+.hilo-stadium { stroke-width: 0.5; stroke: var(--p); fill: none; opacity: 0.7; }
+.hilo-sector { fill: rgba(0, 242, 254, 0.1); stroke: var(--p); transition: 0.3s; cursor: pointer; }
+.hilo-sector:hover, .active-hilo { fill: var(--p); opacity: 1; filter: drop-shadow(0 0 15px var(--p)); }
+
+input, select { 
+    background: rgba(0,0,0,0.5) !important; 
+    border: 1px solid rgba(255,255,255,0.1) !important; 
+    color: white !important; 
+    padding: 12px; border-radius: 4px; outline: none; 
+}
+
+.team-text { color: var(--p); text-shadow: 0 0 10px var(--p); }

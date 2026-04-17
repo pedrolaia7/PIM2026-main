@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pagamento | ArenaPRO</title>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="bg-effect"></div>
+    <div class="cyber-panel p-10 text-center max-w-md w-full">
+        <h2 class="font-cyber text-xl mb-6 uppercase team-text">Autenticação de Pagamento</h2>
+        <div id="cartDetails" class="mb-6 font-cyber text-sm border-b border-white/5 pb-4"></div>
+        
+        <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-[0_0_20px_var(--p)]">
+            <img id="qrCode" src="" alt="QRCode PIX">
+        </div>
+        
+        <p class="text-[10px] font-cyber text-gray-500 mb-6 tracking-widest">ESCANEIE O CÓDIGO PARA VALIDAR A COMPRA</p>
+        <button onclick="confirmPay()" class="btn-tactic w-full">CONFIRMAR RECEBIMENTO</button>
+    </div>
+
+    <script src="../js/core/storage.js"></script>
+
+<script src="../js/core/utils.js"></script>
+
+    <script>
+        const item = Storage.getCart();
+        const user = Storage.getSession();
+        if(!item) window.location.href = 'index.html';
+
+       // Note o uso da crase ` no início e no fim de cada linha:
+document.getElementById('cartDetails').innerHTML = `SETOR: ${item.nome} <br> VALOR: R$ ${item.preco},00`;
+
+document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ARENAPRO-PAY-${Date.now()}`;
+        function confirmPay() {
+            const ticket = {
+                ...item,
+                userEmail: user.email,
+                dataCompra: new Date().toLocaleDateString(),
+                id: Math.random().toString(36).substr(2, 9).toUpperCase()
+            };
+            Storage.savePurchase(ticket);
+            alert("PAGAMENTO CONFIRMADO. INGRESSO DISPONÍVEL NA CARTEIRA.");
+            window.location.href = 'meus-ingressos.html';
+        }
+    </script>
+</body>
+</html>
