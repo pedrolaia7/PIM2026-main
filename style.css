@@ -964,3 +964,20 @@ body {
   height: 70px;
   animation: confirmLogoSpin 0.8s ease forwards, confirmLogoPulse 2.5s ease-in-out 0.8s infinite;
 }
+
+/* ===========================
+   WIDGET VLIBRAS — POSIÇÃO
+=========================== */
+[vw-access-button] {
+  bottom: 24px !important;
+  right: 24px !important;
+  left: auto !important;
+  top: auto !important;
+}
+
+[vw-plugin-wrapper] {
+  bottom: 80px !important;
+  right: 24px !important;
+  left: auto !important;
+  top: auto !important;
+}
